@@ -1,2 +1,4 @@
 golang.org/x/example/hello v0.0.0-20240716161537-39e772fc2670 h1:HLz1bLmabrNKLWKNuWfNNJK+vMnBF2WGY0dLWYQQL5E=
 golang.org/x/example/hello v0.0.0-20240716161537-39e772fc2670/go.mod h1:UhUKOXx5fMcLZxwL20DUrWWBBoRYG9Jvc8FiwZhRHCI=
+golang.org/x/example/hello v0.0.0-20250915201037-7f05d217867b h1:+gZE2jOdiscYByu0606Uw8Ldir2Cecd39Vq/3IEasRA=
+golang.org/x/example/hello v0.0.0-20250915201037-7f05d217867b/go.mod h1:UhUKOXx5fMcLZxwL20DUrWWBBoRYG9Jvc8FiwZhRHCI=
