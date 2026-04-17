@@ -11,32 +11,41 @@ func Unpack(s string) (string, error) {
 	var result strings.Builder
 	var prevChar rune
 	hasPrev := false
-	hasSlash := false
+	escape := false
 
 	for _, char := range s {
-		if hasSlash {
-			if hasPrev {
-				result.WriteRune(prevChar)
-			}
-			prevChar = char
-			hasPrev = true
-			hasSlash = false
-			continue
-		}
-		if char == '\\' {
-			hasSlash = true
-			continue
-		}
-		if char >= '0' && char <= '9' {
-			count := int(char - '0')
-			if count == 0 {
-
-			} else {
-				for i := 0; i < count; i++ {
+		if escape {
+			if char >= '0' && char <= '9' || char == '\\' {
+				if hasPrev {
 					result.WriteRune(prevChar)
 				}
+				prevChar = char
+				hasPrev = true
+				escape = false
+				continue
 			}
-			hasPrev = false
+			return "", ErrInvalidString
+		}
+
+		if char == '\\' {
+			escape = true
+			continue
+		}
+
+		if char >= '0' && char <= '9' {
+			if !hasPrev {
+				return "", ErrInvalidString
+			}
+
+			count := int(char - '0')
+			if count == 0 {
+				hasPrev = false
+			} else {
+				for j := 0; j < count; j++ {
+					result.WriteRune(prevChar)
+				}
+				hasPrev = false
+			}
 		} else {
 			if hasPrev {
 				result.WriteRune(prevChar)
@@ -44,6 +53,10 @@ func Unpack(s string) (string, error) {
 			prevChar = char
 			hasPrev = true
 		}
+	}
+
+	if escape {
+		return "", ErrInvalidString
 	}
 
 	if hasPrev {
